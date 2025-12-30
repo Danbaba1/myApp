@@ -1,17 +1,12 @@
 const { Router } = require('express');
+const { index, about, contactMe } = require('../controllers/indexController');
 
 const indexRouter = Router();
 
-indexRouter.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
+indexRouter.get('/', index);
 
-indexRouter.get('/about', (req, res) => {
-    res.sendFile(path.join(__dirname, 'about.html'));
-});
+indexRouter.get('/about', about);
 
-indexRouter.get('/contact-me', (req, res) => {
-    res.sendFile(path.join(__dirname, 'contact-me.html'));
-});
+indexRouter.get('/contact-me', contactMe);
 
 module.exports = indexRouter;

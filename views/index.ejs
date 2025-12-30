@@ -1,0 +1,13 @@
+<!-- index.ejs -->
+<html>
+   <%- include('header') %>
+    <body>
+        <%- include('navbar', {links: links}) %>
+        <ul>
+            <% users.forEach((user) => { %>
+                <%- include('users/user', {user: user}); %>
+           <% }); %>
+        </ul>
+        <%- include('footer') %>
+    </body>
+</html>
