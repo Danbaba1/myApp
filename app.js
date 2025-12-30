@@ -1,34 +1,19 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+const express = require('express');
+const app = express();
+const authorRouter = require('./routes/authorRouter');
+const bookRouter = require('./routes/bookRouter');
+const indexRouter = require('./routes/indexRouter');
 
-const server = http.createServer((req, res) => {
-    let filePath = '';
+app.use("/authors", authorRouter);
+app.use("/books", bookRouter);
+app.use("/", indexRouter);
 
-    if (req.url === '/') {
-        filePath = path.join(__dirname, 'index.html');
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-    } else if (req.url === '/about') {
-        filePath = path.join(__dirname, 'about.html');
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-    } else if (req.url === '/contact-me') {
-        filePath = path.join(__dirname, 'contact-me.html');
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-    } else {
-        filePath = path.join(__dirname, '404.html');
-        res.writeHead(404, { 'Content-Type': 'text/html' });
-    }
+const PORT = 8080;
 
-    fs.readFile(filePath, (err, data) => {
-        if (err) {
-            res.writeHead(500, { 'Content-Type': 'text/plain' });
-            res.end('Internal Server Error');
-        } else {
-            res.end(data);
-        }
-    });
+app.use((req, res) => {
+    res.status(404).sendFile(path.join(__dirname, '404.html'));
 });
 
-server.listen(8080, 'localhost', () => {
-    console.log('Server is listening on port 8080');
+app.listen(PORT, 'localhost', () => {
+    console.log(`Server is listening on port ${PORT}`);
 });
